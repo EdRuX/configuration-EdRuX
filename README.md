@@ -121,17 +121,11 @@ _/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml_
 * `sudo apt-get install landscape-common`
 * `sudo apt-get install update-notifier-common`
 
-создаём 51-cloudguest
+создаём пустой файл 51-cloudguest
 
-=========Начало 51-cloudguest =============
+`sudo touch /etc/update-motd.d/51-cloudguest`
 
-Файл может быть пустым
-
-========Конец 51-cloudguest =============
-
-Создаём
-
-91-release-upgrade
+cоздаём файл 91-release-upgrade
 
 =========Начало 91-release-upgrade ============
 
