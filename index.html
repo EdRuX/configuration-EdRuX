@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Configuration by RUedx</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Configuration</h1>
+        <h2></h2>
+        <a href="https://github.com/RUedx/configuration" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="Ключевые-заметки-для-установки-open-edx-на-сервер-ubuntu-1404" class="anchor" href="#%D0%9A%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%B5-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8-%D0%B4%D0%BB%D1%8F-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8-open-edx-%D0%BD%D0%B0-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80-ubuntu-1404" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Ключевые заметки для установки Open edX на сервер Ubuntu 14.04</strong>
+</h1>
+
+<p><strong>Шаг 0.</strong> Апгрейдим сервер до последней версии
+<code>sudo apt-get update -y</code>
+<code>sudo apt-get upgrade -y</code>
+<code>sudo reboot</code>
+<strong>Шаг 1.</strong> Устанавливаем необходимые пакеты
+Для удобства управления и отладки устанавливаем файловый менеджер MC редактор NANO и почтовый клиент MUTT.
+<em>Если вы не считаете нужным установку этих пакетов, то данный шаг можно пропустить.</em>
+<code>sudo apt-get install mc nano mutt</code></p>
+
+<p>sudo apt-get install -y build-essential software-properties-common python-software-properties curl git-core libxml2-dev libxslt1-dev libfreetype6-dev python-pip python-apt python-dev libxmlsec1-dev swig
+sudo pip install --upgrade virtualenv
+2. Создаём клон edX для установки
+cd /var/tmp
+git clone -b release <a href="https://github.com/edx/configuration">https://github.com/edx/configuration</a>
+3. Вносим изменения nano /var/tmp/configuration/playbooks/roles/common/defaults/main.yml
+COMMON_SSH_PASSWORD_AUTH to "yes"
+4. Меняем (устанавливаем) пароль для mysql
+проверяем, можем ли зайти mysql -u root -p
+если нет то меняем... Подробности в статье <a href="http://webew.ru/articles/2104.webew">http://webew.ru/articles/2104.webew</a>
+skip-grant-tables
+flush privileges;
+grant all ON <em>.</em> TO <code>root</code>@<code>localhost</code> identified by 'mypassword' with grant option;
+Народный edX
+2
+5. Создаем файл /root/.my.cnf
+----------- Начало .my.cnf ------------
+[client]
+user=root
+password=
+[mysql]
+user=root
+password=
+[mysqldump]
+user=root
+password=
+[mysqldiff]
+user=root
+password=
+----------- Конец .my.cnf ------------
+6. Поменять значения переменной EDXAPP_PYTHON_SANDBOX на False в playbooks/roles/edxapp/defaults/main.yml
+7. Найти файл /var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env.
+Поменять:
+command: update-alternatives –set libblas.so.3gf /usr/lib/libblas/libblas.so.3gf
+на:
+command: update-alternatives –set libblas.so.3 /usr/lib/libblas/libblas.so.3
+и в строке:
+Народный edX
+3
+command: update-alternatives –set liblapack.so.3gf /usr/lib/lapack/liblapack.so.3gf
+на:
+command: update-alternatives –set liblapack.so.3 /usr/lib/lapack/liblapack.so.3
+8. Исправить
+/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml
+get_url: &gt;
+url=<a href="http://download.elasticsearch.org/elasticsearch/elasticsearch/%7B%7B">http://download.elasticsearch.org/elasticsearch/elasticsearch/{{</a> elasticsearch_file }}
+9. Проверить /etc/update-motd.d
+sudo apt-get install landscape-common
+sudo apt-get install update-notifier-common
+создаём 51-cloudguest
+=========Начало 51-cloudguest =============
+Файл может быть пустым
+========Конец 51-cloudguest =============
+Создаём
+91-release-upgrade
+=========Начало 91-release-upgrade ============</p>
+
+<h1>
+<a id="binsh" class="anchor" href="#binsh" aria-hidden="true"><span class="octicon octicon-link"></span></a>!/bin/sh</h1>
+
+<h1>
+<a id="if-the-current-release-is-under-development-there-wont-be-a-new-one" class="anchor" href="#if-the-current-release-is-under-development-there-wont-be-a-new-one" aria-hidden="true"><span class="octicon octicon-link"></span></a>if the current release is under development there won't be a new one</h1>
+
+<p>if [ "$(lsb_release -sd | cut -d' ' -f4)" = "(development" ]; then
+exit 0
+fi
+if [ -x /usr/lib/ubuntu-release-upgrader/release-upgrade-motd ]; then
+exec /usr/lib/ubuntu-release-upgrader/release-upgrade-motd
+fi
+=========Конец 91-release-upgrade ============
+Народный edX
+4
+10. Создать линк
+sudo ln -s /usr/include/freetype2 /usr/include/freetype
+11.
+cd /var/tmp/configuration
+sudo pip install -r requirements.txt
+12. Запускаем инсталляцию
+cd /var/tmp/configuration/playbooks &amp;&amp; sudo ansible-playbook -c local ./edx_sandbox.yml -i "localhost,"</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/RUedx/configuration/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/RUedx/configuration/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/RUedx/configuration"></a> is maintained by <a href="https://github.com/RUedx">RUedx</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
