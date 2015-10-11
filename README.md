@@ -77,3 +77,93 @@ _----------- Начало .my.cnf ------------_
 `password=<your root pass>`
 
 _----------- Конец .my.cnf ------------_
+
+**Шаг 7.** Если ваш VPS хостинг поддерживает виртуализацию OpenVZ то следует поменять значения переменной 
+
+EDXAPP_PYTHON_SANDBOX 
+
+на False в файле main.yml 
+
+_/var/tmp/configuration/playbooks/roles/edxapp/defaults/main.yml_
+
+_Если тип виртуализации KMV, то шаг можно пропустить_
+
+**Шаг 8.** В версии Ubuntu 14.04 изменились названия библиотек по сравнению с базовой версией Ubuntu 12.04 от разработчиков Open edX. Следует найти файл 
+
+_/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env._
+
+и поменять строчки:
+
+``command: update-alternatives –set libblas.so.3gf /usr/lib/libblas/libblas.so.3gf``
+
+на
+
+`command: update-alternatives –set libblas.so.3 /usr/lib/libblas/libblas.so.3`
+
+и 
+
+`command: update-alternatives –set liblapack.so.3gf /usr/lib/lapack/liblapack.so.3gf`
+
+на
+
+`command: update-alternatives –set liblapack.so.3 /usr/lib/lapack/liblapack.so.3`
+
+**Шаг 9.** Найдите ключ get_url: > в файле main.yml 
+
+`/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml`
+
+и исправьте на 
+
+`url=http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_file }}`
+
+**Шаг 10.** Проверьте в каталоге `/etc/update-motd.d` наличие файлов 51-cloudguest и 91-release-upgrade. Для достоверности выполните команды
+
+* `sudo apt-get install landscape-common`
+* `sudo apt-get install update-notifier-common`
+
+создаём 51-cloudguest
+
+=========Начало 51-cloudguest =============
+
+Файл может быть пустым
+
+========Конец 51-cloudguest =============
+
+Создаём
+
+91-release-upgrade
+
+=========Начало 91-release-upgrade ============
+
+`#!/bin/sh`
+
+`# if the current release is under development there won't be a new one`
+
+`if [ "$(lsb_release -sd | cut -d' ' -f4)" = "(development" ]; then`
+
+`exit 0`
+
+`fi`
+
+`if [ -x /usr/lib/ubuntu-release-upgrader/release-upgrade-motd ]; then`
+
+`exec /usr/lib/ubuntu-release-upgrader/release-upgrade-motd`
+
+`fi`
+
+=========Конец 91-release-upgrade ============
+
+**Шаг 11.** В версии Ubuntu 14.04 изменился путь для библиотек. Создаем на них линк
+
+`sudo ln -s /usr/include/freetype2 /usr/include/freetype`
+
+**Шаг 12.** Запускаем конфигурирование установки Open edX
+
+* `cd /var/tmp/configuration`
+* `sudo pip install -r requirements.txt`
+
+**Шаг 13.** Запускаем инсталляцию Open edX
+
+`cd /var/tmp/configuration/playbooks && sudo ansible-playbook -c local ./edx_sandbox.yml -i "localhost,"`
+
+При отсутствии ошибок инсталляции платформа будет установлена... 
