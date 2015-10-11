@@ -86,7 +86,7 @@ EDXAPP_PYTHON_SANDBOX
 
 _/var/tmp/configuration/playbooks/roles/edxapp/defaults/main.yml_
 
-_Если тип виртуализации KMV, то шаг можно пропустить_
+_Если тип виртуализации KVM, то шаг можно пропустить_
 
 **Шаг 8.** В версии Ubuntu 14.04 изменились названия библиотек по сравнению с базовой версией Ubuntu 12.04 от разработчиков Open edX. Следует найти файл 
 
