@@ -46,7 +46,7 @@ _Если СУБД не установлена то_ ...
  
 _nano /var/tmp/configuration/playbooks/roles/common/defaults/main.yml_
 
-COMMON_SSH_PASSWORD_AUTH to "yes"
+`COMMON_SSH_PASSWORD_AUTH: "yes"`
 
 **Шаг 6.** Создаем файл /root/.my.cnf
 
@@ -94,7 +94,7 @@ _/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env._
 
 и поменять строчки:
 
-``command: update-alternatives –set libblas.so.3gf /usr/lib/libblas/libblas.so.3gf``
+`command: update-alternatives –set libblas.so.3gf /usr/lib/libblas/libblas.so.3gf`
 
 на
 
@@ -116,10 +116,10 @@ _/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml_
 
 `url=http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_file }}`
 
-**Шаг 10.** Проверьте в каталоге `/etc/update-motd.d` наличие файлов 51-cloudguest и 91-release-upgrade. Для достоверности выполните команды
+**Шаг 10.** Проверьте в каталоге `/etc/update-motd.d` наличие файлов 51-cloudguest и 91-release-upgrade. Для достоверности выполните команду
 
-* `sudo apt-get install landscape-common`
-* `sudo apt-get install update-notifier-common`
+`sudo apt-get install landscape-common update-notifier-common`
+
 
 создаём пустой файл 51-cloudguest
 
