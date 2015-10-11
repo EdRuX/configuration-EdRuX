@@ -112,7 +112,7 @@ _/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env._
 
 _/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml_
 
-и исправьте на 
+и исправьте строчку следующую за этим ключем на 
 
 `url=http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_file }}`
 
@@ -153,7 +153,7 @@ _/var/tmp/configuration/playbooks/roles/elasticsearch/tasks/main.yml_
 
 =========Конец 91-release-upgrade ============
 
-**Шаг 11.** В версии Ubuntu 14.04 изменился путь для библиотек. Создаем на них линк
+**Шаг 11.** В версии Ubuntu 14.04 изменился путь для библиотек freetype. Создаем на них линк
 
 `sudo ln -s /usr/include/freetype2 /usr/include/freetype`
 
