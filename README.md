@@ -114,7 +114,7 @@ _/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env._
 
 и исправьте на 
 
-`url=http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_file }}`
+_url=http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_file }}_
 
 **Шаг 10.** Проверьте в каталоге `/etc/update-motd.d` наличие файлов 51-cloudguest и 91-release-upgrade. Для достоверности выполните команды
 
