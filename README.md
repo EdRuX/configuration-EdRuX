@@ -28,9 +28,10 @@ _Если СУБД не установлена то_
 Подробности в статье http://webew.ru/articles/2104.webew
 
 Ключевые фразы из этой статьи следующие:
+
 1. skip-grant-tables
-1. flush privileges;
-1. grant all ON *.* TO `root`@`localhost` identified by 'mypassword' with grant option;
+2. flush privileges;
+3. grant all ON *.* TO `root`@`localhost` identified by 'mypassword' with grant option;
 
 **Шаг 3.** Устанавливаем пакеты для сборки платформы Open edX
 
@@ -48,17 +49,30 @@ _nano /var/tmp/configuration/playbooks/roles/common/defaults/main.yml_
 COMMON_SSH_PASSWORD_AUTH to "yes"
 
 **Шаг 6.** Создаем файл /root/.my.cnf
+
 _----------- Начало .my.cnf ------------_
 `[client]`
+
 `user=root`
+
 `password=<your root pass>`
+
 `[mysql]`
+
 `user=root`
+
 `password=<your root pass>`
+
 `[mysqldump]`
+
 `user=root`
+
 `password=<your root pass>`
+
 `[mysqldiff]`
+
 `user=root`
+
 `password=<your root pass>`
+
 _----------- Конец .my.cnf ------------_
