@@ -90,7 +90,7 @@ _Если тип виртуализации KVM, то шаг можно проп
 
 **Шаг 8.** В версии Ubuntu 14.04 изменились названия библиотек по сравнению с базовой версией Ubuntu 12.04 от разработчиков Open edX. Следует найти файл 
 
-_/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env._
+_/var/tmp/configuration/playbooks/roles/edxapp/tasks/python_sandbox_env.yml_
 
 и поменять строчки:
 
