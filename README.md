@@ -44,9 +44,9 @@ _Если СУБД не установлена то_ ...
 
 **Шаг 5.** Вносим изменения в файл main.yml расположенный по адресу
  
-_nano /var/tmp/configuration/playbooks/roles/common/defaults/main.yml_
+_/var/tmp/configuration/playbooks/roles/common/defaults/main.yml_
 
-`COMMON_SSH_PASSWORD_AUTH: "yes"`
+`sed -i 's/COMMON_SSH_PASSWORD_AUTH: "no"/COMMON_SSH_PASSWORD_AUTH: "yes"/' /var/tmp/configuration/playbooks/roles/common/defaults/main.yml`
 
 **Шаг 6.** Создаем файл /root/.my.cnf
 
