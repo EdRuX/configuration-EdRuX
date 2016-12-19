@@ -15,7 +15,16 @@ _Если вы не считаете нужным установку этих п
 
 **Шаг 2.** Проверяем установлен ли сервис MySQL на вашем хостинге
 
-`mysql -u root -p`
+
+ для VPS с Ubuntu из коробки смотрим пароль дефолтного админа **debian-sys-maint**
+
+ `cat /etc/mysql/debian.conf `
+
+ `mysql -u debian-sys-maint -p`
+
+Добавляем рута, после чего:
+
+ `mysql -u root -p`
 
 _Если вы сумели зайти в СУБД MySQL то шаг можно пропустить._
 
@@ -38,11 +47,12 @@ _Если СУБД не установлена то_ ...
 * `sudo apt-get install -y build-essential software-properties-common python-software-properties curl git-core libxml2-dev libxslt1-dev libfreetype6-dev python-pip python-apt python-dev libxmlsec1-dev swig`
 * `sudo pip install --upgrade virtualenv`
 
-**Шаг 4.** Создаём клон edX для установки
+**Шаг 4.** Создаём клон edRUX для установки из НАШЕЙ сборки
 * `cd /var/tmp`
-* `git clone -b release https://github.com/edx/configuration`
+* `git clone -b release https://github.com/EdRuX/configuration`
 
-**Шаг 5.** Вносим изменения в файл main.yml расположенный по адресу
+
+**Шаг 5.** Просто смотрим файл main.yml расположенный по адресу
  
 _/var/tmp/configuration/playbooks/roles/common/defaults/main.yml_
 
